@@ -1,0 +1,53 @@
+{% extends "registration/base.html" %}
+
+
+    {% block content %}
+<div class="container mt-5">
+<div class="col-5 m-auto">
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+        {% else %}
+        <h3 class="card-header text-center bg-primary text-white ">SPH LogIn</h3>
+        {% endif %}
+    {% else %}
+        <h5 class="card-header text-center bg-primary text-white ">SPH LogIn</h5>
+    {% endif %}
+
+    <form class="form" method="post" action="{% url 'farm:login' %}">
+    {% csrf_token %}
+   <div class="form-group">
+
+       <label for="id_username">Username</label>
+       <input id="id_username" name="username" type="text" class="form-control">
+
+       {% comment %}
+       {{ form.username.label_tag }}
+       {{ form.username }}
+       {% endcomment %}
+
+   </div>
+        <div class="form-group">
+        {% comment %}
+            {{ form.password.label_tag }}
+        {{ form.password }}
+            {% endcomment %}
+
+            <label for="id_password">Password</label>
+            <input id="id_password" name="password" type="password" class="form-control">
+        </div>
+
+
+    <input type="submit" value="login">
+    <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+
+</div>
+</div>
+    {% endblock %}
