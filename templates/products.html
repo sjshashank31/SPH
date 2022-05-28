@@ -14,33 +14,55 @@
             <th>Product Type</th>
             <th>Product Category</th>
             <th>Volume Available</th>
+            <th>Date</th>
+            <th>Price</th>
+
+
 
         </tr>
         </thead>
         <tbody id="productsTable">
-        {% for product in products %}
+        {% for product in page_obj %}
         <tr>
             <td><a href="{% url 'farm:product_details' product.id %}"> {{ product.id }} </a></td>
-            <td> {{ product.code }}</td>
-            <td> {{ product.name }}</td>
-            {% if product.type == "S" %}
+            <td> {{ product.product_code }}</td>
+            <td> {{ product.product_name }}</td>
+            {% if product.product_ == "S" %}
             <td>Solid</td>
-            {% elif product.type == "P" %}
+            {% elif product.product_type == "P" %}
             <td>Powder</td>
             {% else %}
             <td>Liquid</td>
             {% endif %}
 
-            <td> {{ product.category }}</td>
-            {% if product.type == "L" %}
-            <td> {{ product.volume }} ml</td>
-            {% else %}
-            <td> {{ product.volume }} gram</td>
-            {% endif %}
+            <td> {{ product.product_category }}</td>
+
+            <td> {{ product.volume }}
+                {% if product.product_type == "L" %}ml
+                {% else %}
+                gram
+                {% endif %}</td>
+
+            <td> {{ product.created_at }}</td>
+            <td> {{ product.price }} Rs.</td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
+
+<ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+  <li class="page-item"><a  class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+    {% endif %}
+    <li class="page-item"><p class="page-link">{{ page_obj.number }} /{{ page_obj.paginator.num_pages }}</p></li>
+
+    {% if page_obj.has_next %}
+
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+        {% endif %}
+
+
+</ul>
 
 <script>
 $(document).ready(function(){

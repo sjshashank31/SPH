@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="m-3">
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+</div>
+
+    <table class="mt-3 table table-responsive-md">
+        <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Product Code</th>
+            <th>Product Name</th>
+            <th>Product Type</th>
+            <th>Product Category</th>
+            <th>Volume Available</th>
+            <th>Date</th>
+            <th>Price</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody id="productsTable">
+        {% for product in products %}
+        <tr>
+            <td><a href="{% url 'farm:product_details' product.id %}"> {{ product.id }} </a></td>
+            <td> {{ product.product_code }}</td>
+            <td> {{ product.product_code.product_name }}</td>
+            {% if product.product_code.product_type == "S" %}
+            <td>Solid</td>
+            {% elif product.product_code.product_type == "P" %}
+            <td>Powder</td>
+            {% else %}
+            <td>Liquid</td>
+            {% endif %}
+
+            <td> {{ product.product_code.product_category }}</td>
+
+            <td> {{ product.volume_added }}
+                {% if product.product_code.product_type == "L" %}ml
+                {% else %}
+                gram
+                {% endif %}
+            </td>
+
+            <td> {{ product.created_at }}</td>
+            <td> {{ product.total_price }} Rs.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#productsTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+
+{% endblock %}

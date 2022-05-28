@@ -23,12 +23,20 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('products/', views.get_products, name='products'),
     path('product_details/<id>/', views.get_product_details, name='product_details'),
-    path('add_payment/', views.add_payment, name='add_payment'),
-    path('add_crop/', views.add_payment, name='add_crop'),
-    path('add_product/', views.add_payment, name='add_product'),
-    path('update_payment/<str:bill_no>/', views.update_payment, name='update_payment'),
-    path('payments/', views.get_payments, name='payments'),
-    path('filter_payments_from_crop/<crop>/', views.filter_crop, name='filter_payments_from_crop'),
+    path('add_crop/', views.add_crop, name='add_crop'),
+    path('crops/', views.get_crops, name='crops'),
+    path('add_product/', views.add_product, name='add_product'),
+    path('add_task/', views.add_task, name='add_task'),
+    path('tasks/', views.get_tasks_list, name='task_list'),
+    path('update_task/<id>/', views.update_task, name='update_task'),
+    path('used_product/', views.used_product, name='used_product'),
+    path('inward_products/', views.get_inward_products, name='inward_products'),
+    path('used_products_list/', views.get_used_products, name='used_products'),
+    path('add_labours/', views.add_labour, name='add_labour'),
+    path('labour_payments/', views.labour_details, name='labour_payments'),
+    path('product_category_form/', views.add_product_category, name='add_product_category'),
+    path('product_categories/', views.product_categories, name='product_categories'),
+    path('expenses/<id>/', views.expenses, name='expenses')
 
 
 ]

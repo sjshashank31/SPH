@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mb-5">
+    <div class="row mt-3">
+        <div class="col-xl-6">
+            <h3>Add New Task</h3>
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                <label for="id_task">Task:</label>
+
+                <select class="form-control" name="task" required id="id_task">
+                    <option value="" selected>---------</option>
+                    {% for task in tasks %}
+
+                    <option value="{{ task.id }}">{{ task.title }}</option>
+                    {% endfor %}
+                </select>
+                </div>
+                <div class="form-group">
+
+                <label for="id_code">Code:</label>
+                <select onchange="getProductDetails()" class="form-control" name="code" id="id_code">
+                    <option value="" selected>---------</option>
+                    {% for product in products %}
+                    <option value="{{ product.id}}">{{product.product_code}}</option>
+                    {% endfor %}
+
+                </select>
+                </div>
+                <div class="form-group">
+                <label>Product Name</label>
+                <input class="form-control" id="hidden_product_name" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>Stock Available</label>
+                <input class="form-control" id="hidden_product_stock" disabled>
+            </div>
+
+
+
+                <div class="form-group">
+                <label for="id_volume_outwarded">Volume outwarded:</label>
+
+                <input class="form-control qty" type="number" name="volume_outwarded" value="0" step="any" id="id_volume_outwarded">
+                </div>
+
+                <div class="form-group">
+                <label>Used for:</label>
+                <div id="id_used_for">
+                    <div>
+                        <label for="id_used_for_0"><input type="radio" name="used_for" value="Spray" maxlength="50"
+                                                          id="id_used_for_0">Spray</label>
+                    </div>
+                    <div>
+                        <label for="id_used_for_1"><input type="radio" name="used_for" value="Drip" maxlength="50"
+                                                          id="id_used_for_1">Drip</label>
+                    </div>
+                    <div>
+                        <label for="id_used_for_2"><input type="radio" name="used_for" value="Spray &amp; Drip"
+                                                          maxlength="50" id="id_used_for_2">Spray and Drip</label>
+                    </div>
+                </div>
+            </div>
+
+                <input type="submit" value="submit" class="btn btn-success">
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function getProductDetails()
+    {
+        var product_id = document.getElementById("id_code").value;
+        product_id = parseInt(product_id);
+        {% for product in products %}
+        if ({{ product.id}}==product_id)
+        {
+            var product_name = document.getElementById("hidden_product_name");
+            var stock_value = document.getElementById("hidden_product_stock");
+            product_name.value = "{{product.product_name}}";
+            if("{{product.product_type}}"=="L")
+            {
+            stock_value.value = "{{product.volume}}"+"ml";
+            }
+
+            else{
+            stock_value.value = "{{product.volume}}"+"gm";
+            }
+        }
+        {% endfor %}
+    }
+
+
+
+// check Item available in stock
+$(document).on("change", ".qty", function() {
+    console.log("Qty value changes");
+    stock = document.getElementById("hidden_product_stock").value;
+    len = stock.length-2;
+    stock = parseInt(stock.substr(0, len));
+    qtyUsed = document.getElementById("id_qty_used");
+    console.log(qtyUsed.value);
+    if(stock<qtyUsed.value)
+    {
+    alert("Not available in stock");
+    qtyUsed.value=0;
+
+    }
+
+});
+
+
+</script>
+
+{% endblock%}

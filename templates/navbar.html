@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <!-- Brand -->
-  <a class="navbar-brand" href="#">SPH</a>
+  <a class="navbar-brand" href="{% url 'farm:home' %}">SPH</a>
 
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -11,16 +11,54 @@
   <!-- Navbar links -->
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'farm:add_payment' %}">Add payment</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'farm:payments' %}">Show Payments</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'farm:products' %}">Show products</a></a>
-      </li>
+              <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">
+        Crops
+      </a><div class="dropdown-menu">
+
+        <a class="dropdown-item" href="{% url 'farm:add_crop' %}">Add Crop</a>
+        <a class="dropdown-item" href="{% url 'farm:crops' %}">Show Crops</a>
+        </div>
+        </li>
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">
+        Products
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'farm:add_product_category' %}">Add Product Category</a>
+        <a class="dropdown-item" href="{% url 'farm:product_categories' %}">Show Product Category</a>
+        <a class="dropdown-item" href="{% url 'farm:add_product' %}">Add Product</a>
+        <a class="dropdown-item" href="{% url 'farm:products' %}">Show Products</a>
+        <a class="dropdown-item" href="{% url 'farm:inward_products' %}">Show Inward Products</a>
+        <a class="dropdown-item" href="{% url 'farm:used_product' %}">Checkout Products</a></a>
+        <a class="dropdown-item" href="{% url 'farm:used_products' %}">used Products</a></a>
+      </div>
+    </li>
+        <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">
+        Add Task
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'farm:add_task' %}">Add Task</a>
+        <a class="dropdown-item" href="{% url 'farm:task_list' %}">Tasks</a>
+      </div>
+    </li>
+
+       <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">
+        Labours
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'farm:add_labour' %}">Add labour payment</a>
+        <a class="dropdown-item" href="{% url 'farm:labour_payments' %}">Labour Payments</a>
+
+      </div>
+    </li>
+
       {% if user.is_authenticated %}
+      <li class="nav-item card-header bg-warning">
+        {{ user.username }}
+      </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'farm:logout' %}">Logout</a></a>
       </li>
